@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, Response
+from flask import Flask, render_template, abort, Response, request
 from uuid import uuid1
 from multiprocessing import Queue, Manager
 from Queue import Empty
@@ -57,6 +57,18 @@ def stream():
     response = Response(
             data_generator(),
             mimetype='audio/x-mpeg')
+    return response
+
+@app.route('/stream-test')
+def stream_test():
+    def data_generator():
+        fp = open('/dev/urandom', 'rb')
+        for chunk in fp:
+            yield chunk.encode('base64')
+
+    response = Response(
+            data_generator(),
+            mimetype='text/plain')
     return response
 
 

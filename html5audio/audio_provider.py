@@ -1,4 +1,4 @@
-from multiprocessing import Process, log_to_stderr
+from multiprocessing import Process, log_to_stderr, SUBDEBUG
 from Queue import Empty, Full
 from itertools import cycle
 import logging
@@ -42,7 +42,7 @@ class Provider(object):
 
         During the stream-loop, messages to add/remove consumers are handled.
         """
-        log = log_to_stderr(level=logging.DEBUG)
+        log = log_to_stderr(level=SUBDEBUG)
         consumers = {}
 
         for fullpath in cycle(self.__files):
@@ -59,7 +59,7 @@ class Provider(object):
 
                 # Handle messages
                 if msg:
-                    if msg.op == Message.ADD:
+                    if msg.op == Message.ADD and msg.uuid not in consumers:
                         consumers[msg.uuid] = msg.payload
                         log.info('Added %s to consumers' % msg.uuid)
                     else:
