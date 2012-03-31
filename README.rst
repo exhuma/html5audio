@@ -23,8 +23,7 @@ the initial attempt were the following:
 Thinks that I will *not* (yet) tackle are:
 
 * transcoding
-* file management (initially I'll work with ``/dev/urandom`` as "audio"
-  source)
+* file management (initially I'll take files as application parameters)
 * Audio metadata
 * any form of visual design
 
